@@ -86,52 +86,52 @@ fig_Perg.update_layout(xaxis_title="Médias", yaxis_title="Perguntas")
 
 fig_Perg
 
-coment = st.checkbox("Comentários")
-df_filteredy = df[df["Comenta"] == "Sim"]
-#df_filteredy
-
-if coment:
-
-    col1, col2 = st.columns([1, 3])
-
-    with col1:
-        df_filtered3 = df_filteredy[df["Nome"] == Nome]
-       # df_filtered3
-        Coment = st.selectbox("Comentário de :",df_filtered3["Avaliador"].unique())
-    
-    with col2:
-        df_filteredz = df_filtered3[df["Avaliador"] == Coment]
-        texto = df_filteredz.iloc[0, 7]
-
-        st.text_area(
-            "Comentário",
-            texto,
-            height=150
-        )
+#coment = st.checkbox("Comentários")
+#df_filteredy = df[df["Comenta"] == "Sim"]
+##df_filteredy
+#
+#if coment:
+#
+#    col1, col2 = st.columns([1, 3])
+#
+#    with col1:
+#        df_filtered3 = df_filteredy[df["Nome"] == Nome]
+#       # df_filtered3
+#        Coment = st.selectbox("Comentário de :",df_filtered3["Avaliador"].unique())
+#    
 #    with col2:
 #        df_filteredz = df_filtered3[df["Avaliador"] == Coment]
-#        df_coment = df_filteredz.iloc[:,7]
-#        df_coment
+#        texto = df_filteredz.iloc[0, 7]
+#
+#        st.text_area(
+#            "Comentário",
+#            texto,
+#            height=150
+#        )
+##    with col2:
+##        df_filteredz = df_filtered3[df["Avaliador"] == Coment]
+##        df_coment = df_filteredz.iloc[:,7]
+##        df_coment
         
 
 #-----------------------------------------------------------------------------------------
-st.write("""
-## Desempenho Geral por Competência
-""" )
-
-Compet_Desemp = st.selectbox("Defina a Competência",df["Compet"].dropna().unique(),index=1)
-
-aval1 = ["Autoavaliação","Gestor"]
-
-df_filtered5 = df[df["Compet"] == Compet_Desemp]
-
-df_MédiaGeral = df_filtered5.groupby("Nome")[["Autoavaliação","Gestor"]].mean().round(decimals=1).reset_index()
-#df_MédiaGeral
-
-fig_DesenvGeral = px.bar(df_MédiaGeral, y=aval1, x="Nome", barmode='group',color_discrete_map ={"Autoavaliação":"#365DBF", "Gestor":"#98B1EE"})
-fig_DesenvGeral.update_layout(xaxis_title="Colaboradores do Setor", yaxis_title="Médias")
-fig_DesenvGeral
-
+#st.write("""
+### Desempenho Geral por Competência
+#""" )
+#
+#Compet_Desemp = st.selectbox("Defina a Competência",df["Compet"].dropna().unique(),index=1)
+#
+#aval1 = ["Autoavaliação","Gestor"]
+#
+#df_filtered5 = df[df["Compet"] == Compet_Desemp]
+#
+#df_MédiaGeral = df_filtered5.groupby("Nome")[["Autoavaliação","Gestor"]].mean().round(decimals=1).reset_index()
+##df_MédiaGeral
+#
+#fig_DesenvGeral = px.bar(df_MédiaGeral, y=aval1, x="Nome", barmode='group',color_discrete_map ={"Autoavaliação":"#365DBF", "Gestor":"#98B1EE"})
+#fig_DesenvGeral.update_layout(xaxis_title="Colaboradores do Setor", yaxis_title="Médias")
+#fig_DesenvGeral
+#
 #---------------------------------------------------------------------------------
 
 st.write("""
