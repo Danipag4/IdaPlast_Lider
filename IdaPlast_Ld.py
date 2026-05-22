@@ -86,6 +86,53 @@ fig_Perg.update_layout(xaxis_title="Médias", yaxis_title="Perguntas")
 
 fig_Perg
 
+#-------------------------------------------
+
+st.write("""
+## Evolução Mensal do Avaliado
+""" )
+
+df_trend_row = df[df["Unnamed: 12"] == Nome]
+
+if not df_trend_row.empty:
+    months = ["janeiro 2026", "fevereiro 2026", "março 2026", "abril 2026"]
+    values = df_trend_row[months].values[0]
+    
+    df_individual_trend = pd.DataFrame({
+        "Mês": ["Janeiro", "Fevereiro", "Março", "Abril"],
+        "Pontuação": values
+    })
+    
+    df_individual_trend["Label"] = df_individual_trend["Pontuação"].apply(
+        lambda v: f"{int(v)}" if pd.notna(v) else ""
+    )
+    
+    fig_trend = px.line(
+        df_individual_trend, 
+        x="Mês", 
+        y="Pontuação", 
+        markers=True,
+        text="Label",
+        height=400
+    )
+    
+    fig_trend.update_traces(
+        line=dict(color="#94380A", width=3),
+        marker=dict(size=10, color="#EBD027", line=dict(color="#94380A", width=2)),
+        textposition="top center"
+    )
+    
+    fig_trend.update_layout(
+        xaxis_title="Mês",
+        yaxis_title="Pontuação",
+        yaxis=dict(range=[0, 300]),
+        showlegend=False
+    )
+    
+    fig_trend
+else:
+    st.info("Histórico de evolução mensal não disponível para este colaborador.")
+
 #coment = st.checkbox("Comentários")
 #df_filteredy = df[df["Comenta"] == "Sim"]
 ##df_filteredy
@@ -167,5 +214,54 @@ if AvalEquipe:
     fig_Setor = px.bar(df_MédiaSetor, x=aval, y="Nome", orientation="h", height=500,barmode='group', color_discrete_map = {"Autoavaliação":"#365DBF", "Gestor":"#98B1EE"})
     fig_Setor.update_layout(xaxis_title="Média", yaxis_title="Colaborador")
     fig_Setor
+#---------------------------------------------
+     #---------------------------------------------
+    st.write("""
+    ### Evolução Mensal da Equipe
+    """)
+    
+    df_team_trend = df[['Unnamed: 12', 'janeiro 2026', 'fevereiro 2026', 'março 2026', 'abril 2026']].dropna(subset=['Unnamed: 12']).copy()
+    df_team_trend = df_team_trend.rename(columns={
+        'Unnamed: 12': 'Colaborador',
+        'janeiro 2026': 'Janeiro',
+        'fevereiro 2026': 'Fevereiro',
+        'março 2026': 'Março',
+        'abril 2026': 'Abril'
+    })
+    
+    df_team_melted = df_team_trend.melt(
+        id_vars=['Colaborador'],
+        var_name='Mês',
+        value_name='Pontuação'
+    )
+    
+    df_team_melted['Label'] = df_team_melted['Pontuação'].apply(
+        lambda v: f"{int(v)}" if pd.notna(v) else ""
+    )
+    
+    fig_team_trend = px.line(
+        df_team_melted,
+        x='Mês',
+        y='Pontuação',
+        color='Colaborador',
+        markers=True,
+        text='Label',
+        height=500
+    )
+    
+    fig_team_trend.update_traces(
+        line=dict(width=3),
+        marker=dict(size=8),
+        textposition="top center"
+    )
+    
+    fig_team_trend.update_layout(
+        xaxis_title="Mês",
+        yaxis_title="Pontuação",
+        yaxis=dict(range=[0, 300]),
+        legend_title="Colaborador"
+    )
+    
+    fig_team_trend
 #---------------------------------------------
     
