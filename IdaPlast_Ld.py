@@ -163,7 +163,7 @@ if st.session_state.printing:
     
     # 4. Sequência de 10 Linhas em Branco (linhas de escrita pontilhadas)
     st.write("### Anotações / Plano de Ação")
-    for i in range(7):
+    for i in range(6):
         st.markdown('<div style="border-bottom: 1px dotted #888; height: 32px; margin-bottom: 2px; width: 100%;"></div>', unsafe_allow_html=True)
         
     # Acionar diálogo de impressão após 1 segundo (tempo dos gráficos renderizarem)
