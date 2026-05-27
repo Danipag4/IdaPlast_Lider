@@ -86,6 +86,34 @@ fig_Perg.update_layout(xaxis_title="Médias", yaxis_title="Perguntas")
 
 fig_Perg
 
+coment = st.checkbox("Comentários")
+df_filteredy = df[df["Comenta"] == "Sim"]
+#df_filteredy
+
+if coment:
+
+    col1, col2 = st.columns([1, 3])
+
+    with col1:
+        df_filtered3 = df_filteredy[df["Nome"] == Nome]
+       # df_filtered3
+        Coment = st.selectbox("Comentário de :",df_filtered3["Avaliador"].unique())
+    
+    with col2:
+        df_filteredz = df_filtered3[df["Avaliador"] == Coment]
+        texto = df_filteredz.iloc[0, 7]
+
+        st.text_area(
+            "Comentário",
+            texto,
+            height=150
+        )
+#    with col2:
+#        df_filteredz = df_filtered3[df["Avaliador"] == Coment]
+#        df_coment = df_filteredz.iloc[:,7]
+#        df_coment
+
+     
 #-------------------------------------------
 
 st.write("""
@@ -133,33 +161,9 @@ if not df_trend_row.empty:
 else:
     st.info("Histórico de evolução mensal não disponível para este colaborador.")
 
-#coment = st.checkbox("Comentários")
-#df_filteredy = df[df["Comenta"] == "Sim"]
-##df_filteredy
-#
-#if coment:
-#
-#    col1, col2 = st.columns([1, 3])
-#
-#    with col1:
-#        df_filtered3 = df_filteredy[df["Nome"] == Nome]
-#       # df_filtered3
-#        Coment = st.selectbox("Comentário de :",df_filtered3["Avaliador"].unique())
-#    
-#    with col2:
-#        df_filteredz = df_filtered3[df["Avaliador"] == Coment]
-#        texto = df_filteredz.iloc[0, 7]
-#
-#        st.text_area(
-#            "Comentário",
-#            texto,
-#            height=150
-#        )
-##    with col2:
-##        df_filteredz = df_filtered3[df["Avaliador"] == Coment]
-##        df_coment = df_filteredz.iloc[:,7]
-##        df_coment
-        
+
+
+   
 
 #-----------------------------------------------------------------------------------------
 #st.write("""
